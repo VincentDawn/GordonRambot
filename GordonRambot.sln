@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34316.72
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GordonRambot", "GordonRambot.csproj", "{672D47A3-6780-4467-857E-00485396BD79}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GordonRambot", "GordonRambot.csproj", "{672D47A3-6780-4467-857E-00485396BD79}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GordonRambot.Shared", "GordonRambot.Shared\GordonRambot.Shared.csproj", "{5BAF1FBC-83A6-408B-AC20-6BED8FC6D6CC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,6 +19,10 @@ Global
 		{672D47A3-6780-4467-857E-00485396BD79}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{672D47A3-6780-4467-857E-00485396BD79}.Release|Any CPU.Build.0 = Release|Any CPU
 		{672D47A3-6780-4467-857E-00485396BD79}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{5BAF1FBC-83A6-408B-AC20-6BED8FC6D6CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5BAF1FBC-83A6-408B-AC20-6BED8FC6D6CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5BAF1FBC-83A6-408B-AC20-6BED8FC6D6CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5BAF1FBC-83A6-408B-AC20-6BED8FC6D6CC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
