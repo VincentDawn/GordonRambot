@@ -1,0 +1,15 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="GordonRambot.AllergensPage">
+    <StackLayout>
+        <Label Text="Do you have any allergies or dietary restrictions?" />
+        <StackLayout Orientation="Horizontal">
+            <RadioButton />
+            <Label Text="Yes" />
+        </StackLayout>
+        <StackLayout Orientation="Horizontal">
+            <RadioButton />
+            <Label Text="No" />
+        </StackLayout>
+    </StackLayout>
+</ContentPage>

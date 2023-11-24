@@ -7,9 +7,9 @@
             InitializeComponent();
         }
 
-         private void OnStartCookingClicked(object sender, EventArgs e)
+         public async void OnStartCookingClicked(object sender, EventArgs e)
         {
-        //todo create some sort of link for startingn
+          await Navigation.PushAsync(new AllergensPage());
         }
     }
 }
