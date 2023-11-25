@@ -1,18 +1,16 @@
-﻿using GordonRambot.Shared.Clients.API_Client.Enums;
-
-namespace GordonRambot.Shared.Clients.API_Client.DTOs
+﻿namespace GordonRambot.Shared.Clients.API_Client.DTOs
 {
     public class DietaryRequirements
     {
         public IEnumerable<string>? Allergies { get; set; }
 
-        public IEnumerable<CuisineStyles>? CuisineStyles { get; set; }
+        public IEnumerable<string>? CuisineStyles { get; set; }
 
         public NutritionalConstraints? NutritionalConstraints { get; set; }
 
-        public IEnumerable<FoodTags>? FoodTags { get; set; }
+        public IEnumerable<string>? FoodTags { get; set; }
 
-        public SpiceLevel? SpiceLevel { get; set; }
+        public string? SpiceLevel { get; set; }
 
         public int NumberOfServings { get; set; }
     }

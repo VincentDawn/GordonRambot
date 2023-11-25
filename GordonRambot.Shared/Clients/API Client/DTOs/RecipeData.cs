@@ -1,15 +1,13 @@
-﻿using GordonRambot.Shared.Clients.API_Client.Enums;
-
-namespace GordonRambot.Shared.Clients.API_Client.DTOs
+﻿namespace GordonRambot.Shared.Clients.API_Client.DTOs
 {
     public class RecipeData
     {
         public string Name { get; set; }
         public string Description { get; set; }
-        public CuisineStyles Cuisine { get; set; }
-        public IList<FoodTags> Tags { get; set; }
-        public SpiceLevel SpiceLevel { get; set; }
-        public PortionSize PortionSize { get; set; }
+        public string Cuisine { get; set; }
+        public IList<string> Tags { get; set; }
+        public string SpiceLevel { get; set; }
+        public string PortionSize { get; set; }
         public int ServingCount { get; set; }
 
         // Nutritional Information per dish

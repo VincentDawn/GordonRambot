@@ -19,12 +19,17 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<PackageReference Include="Azure.AI.OpenAI" Version="1.0.0-beta.9" />
 		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
 		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiVersion)" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Clients\API Client\Enums\" />
+	  <Folder Include="Interfaces\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\GordonRambot.Shared\GordonRambot.Shared.csproj" />
 	</ItemGroup>
 
 </Project>

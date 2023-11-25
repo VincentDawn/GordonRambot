@@ -1,0 +1,87 @@
+﻿@using GordonRambot.Shared.Clients.API_Client
+@using GordonRambot.Shared.Clients.API_Client.DTOs
+@using GordonRambot.Shared.Samples
+@using System.Text
+
+@inject IApiClient ApiClient
+
+<h3>SelectIngredients</h3>
+@if (RecipeDatas != null && RecipeDatas.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Cuisine</th>
+                <th>Tags</th>
+                <th>Spice Level</th>
+                <th>Portion Size</th>
+                <th>Serving Count</th>
+                <th>Estimated Calories</th>
+                <th>Total Fat (g)</th>
+                <th>Total Carbs (g)</th>
+                <th>Total Protein (g)</th>
+                <th>Total Fiber (g)</th>
+                <th>Total Sugar (g)</th>
+                <th>Total Salt (g)</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var recipe in RecipeDatas)
+            {
+                <tr>
+                    <td>@recipe.Name</td>
+                    <td>@recipe.Description</td>
+                    <td>@recipe.Cuisine</td>
+                    <td>@string.Join(", ", recipe.Tags)</td>
+                    <td>@recipe.SpiceLevel</td>
+                    <td>@recipe.PortionSize</td>
+                    <td>@recipe.ServingCount</td>
+                    <td>@recipe.EstimatedCalories</td>
+                    <td>@recipe.TotalFatGrams</td>
+                    <td>@recipe.TotalCarbsGrams</td>
+                    <td>@recipe.TotalProteinGrams</td>
+                    <td>@recipe.TotalFiberGrams</td>
+                    <td>@recipe.TotalSugarGrams</td>
+                    <td>@recipe.TotalSaltGrams</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+<p>@Text</p>
+
+
+<button @onclick="OnButtonClick" disabled="@IsButtonDisabled">Click Me</button>
+
+@code {
+    public string Text = "";
+    public IEnumerable<RecipeData> RecipeDatas = new List<RecipeData>();
+    public bool IsButtonDisabled = false;
+
+    private async void OnButtonClick()
+    {
+        Text = "Calculating";
+        IsButtonDisabled = true;
+        var response = await ApiClient.GetRecipeDatas(new Shared.Clients.APIClient.Requests.RecipesDataFromRequirementsRequest()
+            {
+                DietaryRequirements = SamplePrompts.DietaryRequirementsSamples.DietaryRequirements,
+                Ingredients = SamplePrompts.IngredientsSamples.SampleIngredients
+            });
+
+        if (response is not null)
+        {
+            RecipeDatas = response.RecipeDatas;
+            Text = "";
+        }
+        else
+        {
+            Text = "Something went wrong";
+        }
+
+        IsButtonDisabled = false;
+        StateHasChanged();
+    }
+}

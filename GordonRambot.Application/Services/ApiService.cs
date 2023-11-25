@@ -1,21 +1,22 @@
-﻿using GordonRambot.Shared.Clients.APIClient.Requests;
+﻿using GordonRambot.Shared.Clients.API_Client;
+using GordonRambot.Shared.Clients.APIClient.Requests;
 using GordonRambot.Shared.Clients.APIClient.Responses;
 using System.Text;
 using System.Text.Json;
 
-namespace GordonRambot.Shared.Clients.APIClient
+namespace GordonRambot.Services.Services
 {
-    public class ApiClient
+    public class ApiService : IApiClient
     {
-        public HttpClient HttpClient { get; set; }
+        public static HttpClient HttpClient { get; set; }
 
-        public ApiClient(HttpClient httpClient)
+        public ApiService(HttpClient httpClient)
         {
             HttpClient = httpClient;
         }
 
         // "GetIngredientsFromImage"
-        public static async Task<IngredientsFromImageRequest> GetIngredientsFromImage(IngredientsFromImageRequest request)
+        public async Task<IngredientsFromImageRequest> GetIngredientsFromImage(IngredientsFromImageRequest request)
         {
             using (var httpClient = new HttpClient())
             {
@@ -55,11 +56,8 @@ namespace GordonRambot.Shared.Clients.APIClient
             }
         }
 
-
-
-
         // "GetRecipesData"
-        public static async Task<RecipesDataFromRequirementsResponse> GetRecipeData(RecipesDataFromRequirementsRequest request)
+        public async Task<RecipesDataFromRequirementsResponse> GetRecipeDatas(RecipesDataFromRequirementsRequest request)
         {
             using (var httpClient = new HttpClient())
             {
@@ -99,9 +97,8 @@ namespace GordonRambot.Shared.Clients.APIClient
             }
         }
 
-
         // "GetRecipeInformation"
-        public static async Task<RecipeInformationFromRecipeResponse> GetRecipeInformation(RecipeInformationFromRecipeRequest request)
+        public async Task<RecipeInformationFromRecipeResponse> GetRecipeInformation(RecipeInformationFromRecipeRequest request)
         {
             using (var httpClient = new HttpClient())
             {
@@ -140,6 +137,5 @@ namespace GordonRambot.Shared.Clients.APIClient
                 }
             }
         }
-
     }
 }

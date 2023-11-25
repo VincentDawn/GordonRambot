@@ -2,6 +2,6 @@
 {
     public class IngredientsFromImageRequest
     {
-        public Stream ImageStream { get; set; }
+        public Stream ImageStream { get; set; } = null!;
     }
 }
