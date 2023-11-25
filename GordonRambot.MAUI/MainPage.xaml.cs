@@ -1,4 +1,6 @@
-﻿namespace GordonRambot
+﻿using System;
+
+namespace GordonRambot
 {
     public partial class MainPage : ContentPage
     {
@@ -7,9 +9,9 @@
             InitializeComponent();
         }
 
-         public async void OnStartCookingClicked(object sender, EventArgs e)
+        private async void OnStartCookingClicked(object sender, EventArgs e)
         {
-          await Navigation.PushAsync(new AllergensPage());
+            await Navigation.PushAsync(new AllergensPage());
         }
     }
 }
