@@ -93,5 +93,26 @@ namespace GordonRambot.Shared.Samples
         {
             public const int SampleNumberOfServings = 2;
         }
+
+        public static class RecipeDataSamples
+        {
+            public static readonly RecipeData SampleRecipeData = new RecipeData()
+            {
+                Name = "Mediterranean Quinoa Salad",
+                Description = "A vibrant, nutrient-rich salad featuring quinoa, fresh vegetables, feta cheese, and a lemon-herb dressing.",
+                Cuisine = "Mediterranean",
+                Tags = new List<string> { "GlutenFree", "Vegetarian" },
+                SpiceLevel = "Low",
+                PortionSize = "Medium",
+                ServingCount = 4,
+                EstimatedCalories = 200,
+                TotalFatGrams = 10,
+                TotalCarbsGrams = 25,
+                TotalProteinGrams = 8,
+                TotalFiberGrams = 5,
+                TotalSugarGrams = 3,
+                TotalSaltGrams = 1
+            };
+        }
     }
 }

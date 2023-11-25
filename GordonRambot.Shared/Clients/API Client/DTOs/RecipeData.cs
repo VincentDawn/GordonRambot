@@ -18,5 +18,7 @@
         public int TotalFiberGrams { get; set; }
         public int TotalSugarGrams { get; set; }
         public int TotalSaltGrams { get; set; }
+
+        public IList<Ingredient> Ingredients { get; set; }
     }
 }

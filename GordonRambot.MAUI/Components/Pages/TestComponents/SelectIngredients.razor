@@ -6,7 +6,7 @@
 @inject IApiClient ApiClient
 
 <h3>SelectIngredients</h3>
-@if (RecipeDatas != null && RecipeDatas.Any())
+@if (RecipeDatas is not null && RecipeDatas.Any())
 {
     <table class="table">
         <thead>
@@ -63,7 +63,7 @@
 
     private async void OnButtonClick()
     {
-        Text = "Calculating";
+        Text = "Calculating...";
         IsButtonDisabled = true;
         var response = await ApiClient.GetRecipeDatas(new Shared.Clients.APIClient.Requests.RecipesDataFromRequirementsRequest()
             {
