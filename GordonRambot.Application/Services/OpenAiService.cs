@@ -33,7 +33,7 @@ namespace GordonRambot.Services.Services
 
         private const string RecipesDatasInstructions = "Create up to 6 recipes that are innovative and adhere to the dietary requirements, using the supplied ingredients. Respond with minified JSON.";
 
-        private const string RecipeInformationInstructions = "Based on the recipe data I have provided, create a set of cooking instructions that comprehensively describe how to prepare the dish. Please ensure the instructions are clear and easy to follow, matching the specifics of your recipe. Return both the original recipe data, with ingredients used, and the newly formulated cooking instructions. Please ensure each line in the instructions is appended with a number. Respond with minified JSON.";
+        private const string RecipeInformationInstructions = "Based on the recipe data I have provided, create a set of cooking instructions that comprehensively describe how to prepare the dish. Please ensure the instructions are clear and easy to follow, matching the specifics of your recipe. Return both the original recipe data, with ingredients used, and the newly formulated cooking instructions. Do not number the instructions. Get the bacon.  Respond with minified JSON.";
 
 
         public OpenAiService(IOptions<OpenAiServiceSettings> options)

@@ -52,9 +52,12 @@
 
 @if (Instructions is not null && Instructions.Any())
 {
+    var count = 1;
     foreach (var instruction in Instructions)
     {
-        <p>@instruction</p>
+        <p>
+            @($"{count++}. {instruction}")
+        </p>
     }
 }
 
