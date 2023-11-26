@@ -3,7 +3,6 @@
     internal enum UserFlowStep
     {
         None,
-        SetAllergies,
         SetDietaryRequirements,
         SetIngredients,
         ShowPossibleRecipes,

@@ -4,6 +4,6 @@ namespace GordonRambot.Shared.Clients.APIClient.Responses
 {
     public class RecipesDataFromRequirementsResponse
     {
-        public IEnumerable<RecipeData> RecipeDatas { get; set; }
+        public List<RecipeData> RecipeDatas { get; set; }
     }
 }
