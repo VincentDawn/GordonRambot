@@ -7,7 +7,7 @@
     padding: 20px;
     min-height: 100vh; /* Ensure the container takes at least the full viewport height */
     color: #333;
-    background-image: url('background.png');
+    background-image: url('GordonRambot.MAUI\Resources\Images\background.png');
     background-size: cover;
     background-position: center;
 }
