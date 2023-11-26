@@ -1,0 +1,235 @@
+@page "/"
+
+@using GordonRambot
+@using GordonRambot.Components.Components
+@using GordonRambot.Components.Pages.TestComponents
+@using GordonRambot.Enums
+@using GordonRambot.Shared.Clients.API_Client
+@using GordonRambot.Shared.Clients.API_Client.DTOs
+@using GordonRambot.Shared.Samples
+
+@inject NavigationManager NavigationManager
+@inject IApiClient ApiClient
+
+<div class="home-page">
+    <img src="/Images/rambot.png" alt="Rambot Icon" class="rambot-icon">
+
+    @if (CurrentUserFlowStep == UserFlowStep.None)
+    {
+        <h1>Welcome to Gordon Rambot</h1>
+        <h2>SOME INTRO TEXT</h2>
+
+        <button class="btn-settings" @onclick="GoToNextStep">Lets go!</button>
+    }
+    else if (CurrentUserFlowStep == UserFlowStep.SetDietaryRequirements)
+    {
+        <DietaryRequirementsComponent DietaryRequirements="DietaryRequirements" GoToNextParentStep="GoToNextStep" GoToPreviousParentStep="GoToPreviousStep" />
+    }
+    else if (CurrentUserFlowStep == UserFlowStep.UploadImage)
+    {
+        @* Step 99 *@
+        <h1>Imageuplaod</h1>
+        <h2>Instructions</h2>
+
+    }
+    else if (CurrentUserFlowStep == UserFlowStep.SetIngredients)
+    {
+        <IngredientsComponent Ingredients="@Ingredients"  GetRecipes="GetRecipes" GoToPreviousParentStep="GoToPreviousStep" />
+    }
+    else if (CurrentUserFlowStep == UserFlowStep.ShowPossibleRecipes)
+    {
+        if (IsLoading)
+        {
+            <h1>Loading...</h1>
+        }
+        else if (RecipeDatas?.Any() ?? false)
+        {
+            <ShowRecipesComponent RecipeDatas="@RecipeDatas" SelectedRecipe="@SelectedRecipe" SetSelectedRecipe="SetSelectedRecipe" GetRecipeInstructions="@GetRecipeInstructions" GoToPreviousParentStep="GoToPreviousStep" />
+        }
+        else
+        {
+            <p>Unable to create any recipes.</p>
+            <button class="btn-settings" @onclick="GoToPreviousStep">Previous main step</button>
+        }
+
+    }
+    else if (CurrentUserFlowStep == UserFlowStep.ShowInstructionsForRecipe)
+    {
+        if (IsLoading)
+        {
+            <h1>Loading...</h1>
+        }
+        else if (FinalRecipeData is not null)
+        {
+            <ShowRecipeAndInstructionsComponent Instructions="@RecipeInstructions" RecipeData="@FinalRecipeData" Restart="Restart" GoToPreviousParentStep="GoToPreviousStep" />
+        }
+        else
+        {
+            <p>Unable to create recipe.</p>
+            <button class="btn-settings" @onclick="GoToPreviousStep">Previous main step</button>
+        }
+    }
+
+    @* <button class="btn-settings" @onclick="GoToSettings">Go to Settings</button> *@
+
+</div>
+
+@code {
+    private UserFlowStep CurrentUserFlowStep;
+
+    // Models
+    public DietaryRequirements DietaryRequirements = new DietaryRequirements()
+        {
+            Allergies = new List<string>(),
+            CuisineStyles = new List<string>(),
+            FoodTags = new List<string>(),
+            NumberOfServings = 1,
+            SpiceLevel = string.Empty,
+            NutritionalConstraints = new NutritionalConstraints()
+        };
+    public List<Ingredient> Ingredients = new List<Ingredient>();
+
+    public List<RecipeData> RecipeDatas = new List<RecipeData>();
+    public RecipeData SelectedRecipe = null;
+
+    public RecipeData FinalRecipeData = null;
+    public List<string> RecipeInstructions = new List<string>();
+
+    private bool IsLoading = false;
+
+    private bool TestMode = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        // Start at first step
+        CurrentUserFlowStep = UserFlowStep.None;
+
+        if (TestMode)
+        {
+            SetTestData();
+        }
+
+        // Call base method
+        await base.OnInitializedAsync();
+    }
+
+    private void GoToSettings()
+    {
+        NavigationManager.NavigateTo("/settings");
+    }
+
+    private void GoToStep(UserFlowStep userFlowStep)
+    {
+        CurrentUserFlowStep = userFlowStep;
+        StateHasChanged();
+    }
+
+    private void GoToNextStep()
+    {
+        var nextStep = (UserFlowStep)(((int)CurrentUserFlowStep) + 1);
+        GoToStep(nextStep);
+    }
+
+    private void GoToPreviousStep()
+    {
+        var previousStep = (UserFlowStep)(((int)CurrentUserFlowStep) - 1);
+        GoToStep(previousStep);
+    }
+
+    private void Restart()
+    {
+        ResetProperties();
+        GoToStep(UserFlowStep.None);
+    }
+
+
+    private void ResetProperties()
+    {
+        DietaryRequirements = new DietaryRequirements()
+            {
+                Allergies = new List<string>(),
+                CuisineStyles = new List<string>(),
+                FoodTags = new List<string>(),
+                NumberOfServings = 1,
+                SpiceLevel = string.Empty,
+                NutritionalConstraints = new NutritionalConstraints()
+            };
+        Ingredients = new List<Ingredient>();
+
+        RecipeDatas = new List<RecipeData>();
+        SelectedRecipe = null;
+
+        FinalRecipeData = null;
+        RecipeInstructions = new List<string>();
+    }
+
+    private void SetTestData()
+    {
+        DietaryRequirements = new DietaryRequirements()
+            {
+                Allergies = SamplePrompts.AllergiesSamples.SampleAllergies,
+                CuisineStyles = SamplePrompts.CuisineStylesSamples.SampleCuisineStyles,
+                FoodTags = SamplePrompts.FoodTagsSamples.SampleFoodTags,
+                NumberOfServings = 1,
+                SpiceLevel = SamplePrompts.SpiceLevelSamples.SampleSpiceLevel,
+                NutritionalConstraints = new NutritionalConstraints()
+            };
+        Ingredients = SamplePrompts.IngredientsSamples.SampleIngredients;
+
+        RecipeDatas = new List<RecipeData>();
+        SelectedRecipe = null;
+
+        FinalRecipeData = null;
+        RecipeInstructions = new List<string>();
+    }
+
+    private void SetSelectedRecipe(RecipeData recipe)
+    {
+        SelectedRecipe = recipe;
+    }
+
+    private async void GetRecipes()
+    {
+        IsLoading = true;
+
+        GoToNextStep();
+
+        var response = await ApiClient.GetRecipeDatas(new Shared.Clients.APIClient.Requests.RecipesDataFromRequirementsRequest()
+            {
+                DietaryRequirements = DietaryRequirements,
+                Ingredients = Ingredients
+            });
+
+        if (response is not null)
+        {
+            RecipeDatas = response.RecipeDatas;
+        }
+
+        IsLoading = false;
+
+        StateHasChanged();
+    }
+
+    private async void GetRecipeInstructions()
+    {
+        IsLoading = true;
+
+        GoToNextStep();
+
+        var response = await ApiClient.GetRecipeInformation(new Shared.Clients.APIClient.Requests.RecipeInformationFromRecipeRequest()
+            {
+                RecipeData = SelectedRecipe,
+                DietaryRequirements = DietaryRequirements
+            });
+
+        if (response is not null)
+        {
+            FinalRecipeData = response.RecipeData;
+            RecipeInstructions = response.RecipeInstructions;
+        }
+
+        IsLoading = false;
+
+        StateHasChanged();
+    }
+}

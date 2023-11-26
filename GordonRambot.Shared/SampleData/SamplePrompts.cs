@@ -9,7 +9,7 @@ namespace GordonRambot.Shared.Samples
         {
             public const string SampleIngredientsJson = "[{\"Name\":\"Apple\",\"WeightGrams\":150},{\"Name\":\"Egg\",\"WeightGrams\":50},{\"Name\":\"Milk Carton\",\"WeightGrams\":1000},{\"Name\":\"Butter\",\"WeightGrams\":200},{\"Name\":\"Cheddar Cheese\",\"WeightGrams\":250},{\"Name\":\"Yogurt\",\"WeightGrams\":500},{\"Name\":\"Carrot\",\"WeightGrams\":100},{\"Name\":\"Cucumber\",\"WeightGrams\":300},{\"Name\":\"Tomato\",\"WeightGrams\":100},{\"Name\":\"Lettuce\",\"WeightGrams\":200},{\"Name\":\"Orange Juice\",\"WeightGrams\":1000},{\"Name\":\"Grapes\",\"WeightGrams\":500},{\"Name\":\"Strawberries\",\"WeightGrams\":250},{\"Name\":\"Ham\",\"WeightGrams\":300},{\"Name\":\"Salmon Fillet\",\"WeightGrams\":400}]";
 
-            public static readonly IEnumerable<Ingredient> SampleIngredients = JsonSerializer.Deserialize<IEnumerable<Ingredient>>(SampleIngredientsJson)!;
+            public static readonly List<Ingredient> SampleIngredients = JsonSerializer.Deserialize<List<Ingredient>>(SampleIngredientsJson)!;
         }
 
         public static class DietaryRequirementsSamples
@@ -27,12 +27,12 @@ namespace GordonRambot.Shared.Samples
 
         public static class AllergiesSamples
         {
-            public static readonly IEnumerable<string> SampleAllergies = new List<string> { "Peanuts", "Shellfish", "Gluten" };
+            public static readonly List<string> SampleAllergies = new List<string> { "Peanuts", "Shellfish", "Gluten" };
         }
 
         public static class CuisineStylesSamples
         {
-            public static readonly IEnumerable<string> SampleCuisineStyles = new List<string>
+            public static readonly List<string> SampleCuisineStyles = new List<string>
             {
                 "Italian",
                 "Mexican",
@@ -75,7 +75,7 @@ namespace GordonRambot.Shared.Samples
 
         public static class FoodTagsSamples
         {
-            public static readonly IEnumerable<string> SampleFoodTags = new List<string>
+            public static readonly List<string> SampleFoodTags = new List<string>
                 {
                     "Vegan",
                     "GlutenFree",
@@ -86,7 +86,7 @@ namespace GordonRambot.Shared.Samples
 
         public static class SpiceLevelSamples
         {
-            public static readonly string SampleSpiceLevel = "Medium";
+            public static readonly string SampleSpiceLevel = "Any";
         }
 
         public static class NumberOfServingsSamples

@@ -88,7 +88,7 @@ namespace GordonRambot.Services.Services
 
                         return new RecipesDataFromRequirementsResponse()
                         {
-                            RecipeDatas = JsonSerializer.Deserialize<IEnumerable<RecipeData>>(content)
+                            RecipeDatas = JsonSerializer.Deserialize<List<RecipeData>>(content)
                         };
                     }
                 }

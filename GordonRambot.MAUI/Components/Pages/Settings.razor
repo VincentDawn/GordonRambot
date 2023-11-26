@@ -1,0 +1,72 @@
+@page "/settings"
+@inject NavigationManager NavigationManager
+
+<h1>Settings</h1>
+
+<div>
+    <h2>OpenAI Key</h2>
+    <button @onclick="ShowOpenAIKeyPopup">Set OpenAI Key</button>
+    @if (showOpenAIKeyPopup)
+    {
+        <div class="popup">
+            <div class="popup-content">
+                <input type="text" @bind="openAIKeyInput" />
+                <button @onclick="SaveOpenAIKey">Submit</button>
+                <button @onclick="()=> showOpenAIKeyPopup = false">Cancel</button>
+            </div>
+        </div>
+    }
+</div>
+
+<div>
+    <h2>Allergens</h2>
+    <button @onclick="ShowAllergensPopup">Set Allergens</button>
+    @if (showAllergensPopup)
+    {
+        <div class="popup">
+            <div class="popup-content">
+                <input type="text" @bind="allergensInput" placeholder="Enter allergens separated by commas"/>
+                <button @onclick="SaveAllergens">Submit</button>
+                <button @onclick="()=> showAllergensPopup = false">Cancel</button>
+            </div>
+        </div>
+    }
+</div>
+
+<button class="btn-back" @onclick="GoBack">Back</button>
+
+@code {
+    private bool showOpenAIKeyPopup = false;
+    private bool showAllergensPopup = false;
+    private string openAIKeyInput;
+    private string allergensInput;
+    // Alternatively, use List<string> allergensList; if you prefer to store as a list
+
+    private void ShowOpenAIKeyPopup()
+    {
+        showOpenAIKeyPopup = true;
+    }
+
+    private void SaveOpenAIKey()
+    {
+        var savedOpenAIKey = openAIKeyInput;
+        showOpenAIKeyPopup = false;
+    }
+
+    private void ShowAllergensPopup()
+    {
+        showAllergensPopup = true;
+    }
+
+    private void SaveAllergens()
+    {
+        var savedAllergens = allergensInput;
+        var splitAllergens = allergensInput.Split(new char[] { ',', ' ' }, StringSplitOptions.RemoveEmptyEntries).ToList();
+        showAllergensPopup = false;
+    }
+
+    private void GoBack()
+    {
+        NavigationManager.NavigateTo("/");
+    }
+}

@@ -1,0 +1,51 @@
+﻿<h3>AllergiesComponent</h3>
+@if (Allergies.Any())
+{
+    <table class="table gr-tables">
+        <thead>
+            <tr>
+                <th>Allergy</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var allergy in Allergies)
+            {
+                <tr>
+                    <td>@allergy</td>
+                    <td>
+                        <button class="btn btn-danger btn-sm" @onclick="() => RemoveAllergy(allergy)">Remove</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No allergies listed.</p>
+}
+
+<input type="text" @bind="newAllergy" />
+<button @onclick="AddAllergy">Add Allergy</button>
+
+@code {
+    [Parameter]
+    public List<string> Allergies { get; set; }
+
+    private string newAllergy = string.Empty;
+
+    private void AddAllergy()
+    {
+        if (!string.IsNullOrWhiteSpace(newAllergy))
+        {
+            Allergies.Add(newAllergy);
+            newAllergy = string.Empty;
+        }
+    }
+
+    private void RemoveAllergy(string allergy)
+    {
+        Allergies.Remove(allergy);
+    }
+}

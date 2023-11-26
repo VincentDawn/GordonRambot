@@ -1,9 +1,5 @@
-﻿@using GordonRambot.Shared.Clients.API_Client
-@using GordonRambot.Shared.Clients.API_Client.DTOs
-@using GordonRambot.Shared.Samples
-
-@inject IApiClient ApiClient
-
+﻿@using GordonRambot.Shared.Clients.API_Client.DTOs
+<h3>ShowRecipeAndInstructionsComponent</h3>
 
 @if (RecipeData is not null)
 {
@@ -46,54 +42,31 @@
         </tbody>
     </table>
 
-}
-
-
-@if (Instructions is not null && Instructions.Any())
-{
-    var count = 1;
-    foreach (var instruction in Instructions)
+    @if (Instructions is not null && Instructions.Any())
     {
-        <p>
-            @($"{count++}. {instruction}")
-        </p>
+        var count = 1;
+        foreach (var instruction in Instructions)
+        {
+            <p>
+                @($"{count++}. {instruction}")
+            </p>
+        }
     }
+
+    <button class="btn-settings" @onclick="() => Restart.InvokeAsync()">Restart</button>
+    <button class="btn-settings" @onclick="() => GoToPreviousParentStep.InvokeAsync()">Previous main step</button>
 }
-
-<p>@Text</p>
-
-
-<button @onclick="OnButtonClick" disabled="@IsButtonDisabled">Select Recipe</button>
 
 @code {
-    public string Text = "";
-    public RecipeData RecipeData = null;
-    public IEnumerable<string> Instructions = new List<string>();
-    public bool IsButtonDisabled = false;
+    [Parameter]
+    public RecipeData RecipeData { get; set; }
 
-    private async void OnButtonClick()
-    {
-        Text = "Calculating...";
-        IsButtonDisabled = true;
-        var response = await ApiClient.GetRecipeInformation(new Shared.Clients.APIClient.Requests.RecipeInformationFromRecipeRequest()
-            {
-                RecipeData = SamplePrompts.RecipeDataSamples.SampleRecipeData,
-                DietaryRequirements = SamplePrompts.DietaryRequirementsSamples.DietaryRequirements
-            });
+    [Parameter]
+    public List<string> Instructions { get; set; }
 
-        if (response is not null)
-        {
-            Console.WriteLine("Hello");
-            RecipeData = response.RecipeData;
-            Instructions = response.RecipeInstructions;
-            Text = "";
-        }
-        else
-        {
-            Text = "Something went wrong";
-        }
+    [Parameter]
+    public EventCallback Restart { get; set; }
 
-        IsButtonDisabled = false;
-        StateHasChanged();
-    }
+    [Parameter]
+    public EventCallback GoToPreviousParentStep { get; set; }
 }

@@ -1,9 +1,5 @@
-﻿@using GordonRambot.Shared.Clients.API_Client
-@using GordonRambot.Shared.Clients.API_Client.DTOs
-@using GordonRambot.Shared.Samples
-@using System.Text
-
-@inject IApiClient ApiClient
+﻿@using GordonRambot.Shared.Clients.API_Client.DTOs
+<h3>ShowRecipesComponent</h3>
 
 @if (RecipeDatas is not null && RecipeDatas.Any())
 {
@@ -24,6 +20,7 @@
                 <th>Total Fiber (g)</th>
                 <th>Total Sugar (g)</th>
                 <th>Total Salt (g)</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -44,43 +41,38 @@
                     <td>@recipe.TotalFiberGrams</td>
                     <td>@recipe.TotalSugarGrams</td>
                     <td>@recipe.TotalSaltGrams</td>
+                    <td>
+                        <button class="btn-settings" @onclick="() => SelectRecipe(recipe)">Select</button>
+                    </td>
                 </tr>
             }
         </tbody>
     </table>
+
+    <button class="btn-settings" @onclick="GoToPreviousParentStep">Previous main step</button>
+
 }
 
-<p>@Text</p>
-
-
-<button @onclick="OnButtonClick" disabled="@IsButtonDisabled">Select Ingredients</button>
-
 @code {
-    public string Text = "";
-    public IEnumerable<RecipeData> RecipeDatas = new List<RecipeData>();
-    public bool IsButtonDisabled = false;
+    [Parameter]
+    public List<RecipeData> RecipeDatas { get; set; }
 
-    private async void OnButtonClick()
+    [Parameter]
+    public EventCallback GetRecipeInstructions { get; set; }
+
+    [Parameter]
+    public EventCallback GoToPreviousParentStep { get; set; }
+
+    [Parameter]
+    public RecipeData? SelectedRecipe { get; set; }
+
+    [Parameter]
+    public EventCallback<RecipeData> SetSelectedRecipe { get; set; }
+
+    private void SelectRecipe(RecipeData selectedRecipe)
     {
-        Text = "Calculating...";
-        IsButtonDisabled = true;
-        var response = await ApiClient.GetRecipeDatas(new Shared.Clients.APIClient.Requests.RecipesDataFromRequirementsRequest()
-            {
-                DietaryRequirements = SamplePrompts.DietaryRequirementsSamples.DietaryRequirements,
-                Ingredients = SamplePrompts.IngredientsSamples.SampleIngredients
-            });
-
-        if (response is not null)
-        {
-            RecipeDatas = response.RecipeDatas;
-            Text = "";
-        }
-        else
-        {
-            Text = "Something went wrong";
-        }
-
-        IsButtonDisabled = false;
-        StateHasChanged();
+        SelectedRecipe = selectedRecipe;
+        SetSelectedRecipe.InvokeAsync(SelectedRecipe);
+        GetRecipeInstructions.InvokeAsync();
     }
 }
