@@ -58,7 +58,7 @@ namespace GordonRambot.Services.Services
                 if (response is not null)
                 {
 
-                    var content = response.Value.Choices.First().Message.Content;
+                    var content = response.Value.Choices[0].Message.Content;
 
                     if (content is not null)
                     {
@@ -107,7 +107,7 @@ namespace GordonRambot.Services.Services
                 var response = await _openAIClient.GetChatCompletionsAsync(chatCompletionsOptions);
                 if (response is not null)
                 {
-                    var content = response.Value.Choices.First().Message.Content;
+                    var content = response.Value.Choices[0].Message.Content;
 
                     if (content is not null)
                     {
