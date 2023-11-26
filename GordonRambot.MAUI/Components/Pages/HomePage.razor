@@ -34,7 +34,7 @@
     }
     else if (CurrentUserFlowStep == UserFlowStep.SetIngredients)
     {
-        <IngredientsComponent Ingredients="@Ingredients"  GetRecipes="GetRecipes" GoToPreviousParentStep="GoToPreviousStep" />
+        <IngredientsComponent Ingredients="@Ingredients" GetRecipes="GetRecipes" GoToPreviousParentStep="GoToPreviousStep" />
     }
     else if (CurrentUserFlowStep == UserFlowStep.ShowPossibleRecipes)
     {
@@ -90,9 +90,9 @@
     public List<Ingredient> Ingredients = new List<Ingredient>();
 
     public List<RecipeData> RecipeDatas = new List<RecipeData>();
-    public RecipeData SelectedRecipe = null;
+    public RecipeData? SelectedRecipe = null;
 
-    public RecipeData FinalRecipeData = null;
+    public RecipeData? FinalRecipeData = null;
     public List<string> RecipeInstructions = new List<string>();
 
     private bool IsLoading = false;
@@ -107,6 +107,10 @@
         if (TestMode)
         {
             SetTestData();
+        }
+        else
+        {
+            SetDetaultData();
         }
 
         // Call base method
@@ -144,6 +148,18 @@
 
 
     private void ResetProperties()
+    {
+        if (TestMode)
+        {
+            SetTestData();
+        }
+        else
+        {
+            SetDetaultData();
+        }
+    }
+
+    private void SetDetaultData()
     {
         DietaryRequirements = new DietaryRequirements()
             {
@@ -218,7 +234,7 @@
 
         var response = await ApiClient.GetRecipeInformation(new Shared.Clients.APIClient.Requests.RecipeInformationFromRecipeRequest()
             {
-                RecipeData = SelectedRecipe,
+                RecipeData = SelectedRecipe!,
                 DietaryRequirements = DietaryRequirements
             });
 

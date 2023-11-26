@@ -11,7 +11,7 @@
 
 @code {
     [Parameter]
-    public string SpiceLevel { get; set; }
+    public string SpiceLevel { get; set; } = null!;
 
     private readonly List<string> spiceLevels = new List<string>
     {
@@ -28,6 +28,6 @@
 
     private void UpdateSpiceLevel(ChangeEventArgs e)
     {
-        SpiceLevel = e.Value?.ToString();
+        SpiceLevel = e.Value!.ToString()!;
     }
 }
