@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GordonRambot", "GordonRambo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GordonRambot.Shared", "GordonRambot.Shared\GordonRambot.Shared.csproj", "{764FDE2E-8351-4F4A-946C-4376CF47AA12}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GordonRambot.Services", "GordonRambot.Application\GordonRambot.Services.csproj", "{D023390F-DA4F-4978-B703-4FE93D06BD82}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GordonRambot.Services", "GordonRambot.Application\GordonRambot.Services.csproj", "{D023390F-DA4F-4978-B703-4FE93D06BD82}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

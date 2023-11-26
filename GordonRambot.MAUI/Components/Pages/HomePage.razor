@@ -1,27 +1,147 @@
 @page "/"
 @using GordonRambot
+@using GordonRambot.Components.Components
 @using GordonRambot.Components.Pages.TestComponents
+@using GordonRambot.Enums
+@using GordonRambot.Shared.Clients.API_Client.DTOs
 @inject NavigationManager NavigationManager
 
 <div class="home-page">
-     <img src="/Images/rambot.png" alt="Rambot Icon" class="rambot-icon">
-     <h1>Welcome to Gordon Rambot</h1>
-    <div class="component">
-        <SelectIngredients></SelectIngredients>
-    </div>
-    <div class="component">
-        <SelectRecipe></SelectRecipe>
-    </div>
-    <div class="component">
-        <h2>Upload Image</h2>
-        <UploadImage></UploadImage>
-    </div>
-    <button class="btn-settings" @onclick="GoToSettings">Go to Settings</button>
+    <img src="/Images/rambot.png" alt="Rambot Icon" class="rambot-icon">
+
+    @if (CurrentUserFlowStep == UserFlowStep.None)
+    {
+        <h1>Welcome to Gordon Rambot</h1>
+        <h2>SOME INTRO TEXT</h2>
+
+        <button class="btn-settings" @onclick="GoToNextStep">Lets go!</button>
+    }
+    else if (CurrentUserFlowStep == UserFlowStep.SetAllergies)
+    {
+        <h1>Allergies</h1>
+        <h2>Instructions</h2>
+
+        <AllergiesComponent Allergies="@Allergies" />
+
+        <button class="btn-settings" @onclick="GoToNextStep">Next</button>
+        <button class="btn-settings" @onclick="GoToPreviousStep">Previous</button>
+    }
+    else if (CurrentUserFlowStep == UserFlowStep.SetDietaryRequirements)
+    {
+        <h1>Dietary requirements</h1>
+        <h2>Instructions</h2>
+
+        <button class="btn-settings" @onclick="GoToNextStep">Next</button>
+        <button class="btn-settings" @onclick="GoToPreviousStep">Previous</button>
+    }
+    else if (CurrentUserFlowStep == UserFlowStep.UploadImage)
+    {
+        @* Step 99 *@
+        <h1>Imageuplaod</h1>
+        <h2>Instructions</h2>
+
+
+
+    }
+    else if (CurrentUserFlowStep == UserFlowStep.SetIngredients)
+    {
+        <h1>Set ingredients</h1>
+        <h2>Instructions</h2>
+
+
+        <button class="btn-settings" @onclick="GoToNextStep">Next</button>
+        <button class="btn-settings" @onclick="GoToPreviousStep">Previous</button>
+    }
+    else if (CurrentUserFlowStep == UserFlowStep.ShowPossibleRecipes)
+    {
+        <h1>Show recipes</h1>
+        <h2>Instructions</h2>
+
+        <button class="btn-settings" @onclick="GoToNextStep">Next</button>
+        <button class="btn-settings" @onclick="GoToPreviousStep">Previous</button>
+    }
+    else if (CurrentUserFlowStep == UserFlowStep.ShowInstructionsForRecipe)
+    {
+        <h2>Show recipe instructions</h2>
+        <h2>Instructions</h2>
+
+        <button class="btn-settings" @onclick="Restart">Restart</button>
+        <button class="btn-settings" @onclick="GoToPreviousStep">Previous</button>
+    }
+
+    @* <button class="btn-settings" @onclick="GoToSettings">Go to Settings</button> *@
+
 </div>
 
 @code {
+    private UserFlowStep CurrentUserFlowStep;
+
+    // Models
+    public List<string> Allergies = new List<string>();
+
+    public DietaryRequirements DietaryRequirements = null;
+
+    public List<Ingredient> Ingredients = new List<Ingredient>();
+
+    public List<RecipeData> RecipeDatas = new List<RecipeData>();
+
+    public RecipeData SelectedRecipe = null;
+
+    public RecipeData FinalRecipeData = null;
+
+    public List<string> RecipeInstructions = new List<string>();
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        // Start at first step
+        CurrentUserFlowStep = UserFlowStep.None;
+
+        // Clear out all the models
+        ResetProperties();
+
+
+        // Call base method
+        await base.OnInitializedAsync();
+    }
+
     private void GoToSettings()
     {
         NavigationManager.NavigateTo("/settings");
+    }
+
+    private void GoToStep(UserFlowStep userFlowStep)
+    {
+        CurrentUserFlowStep = userFlowStep;
+        StateHasChanged();
+    }
+
+    private void GoToNextStep()
+    {
+        var nextStep = (UserFlowStep)(((int)CurrentUserFlowStep) + 1);
+        GoToStep(nextStep);
+    }
+
+    private void GoToPreviousStep()
+    {
+        var previousStep = (UserFlowStep)(((int)CurrentUserFlowStep) - 1);
+        GoToStep(previousStep);
+    }
+    private void Restart()
+    {
+        ResetProperties();
+        GoToStep(UserFlowStep.None);
+    }
+
+
+    public void ResetProperties()
+    {
+        Allergies = new List<string>(); // Resets to an empty list
+        DietaryRequirements = null; // Resets to null
+        Ingredients = new List<Ingredient>(); // Resets to an empty list
+        RecipeDatas = new List<RecipeData>(); // Resets to an empty list
+        SelectedRecipe = null; // Resets to null
+        FinalRecipeData = null; // Resets to null
+        RecipeInstructions = new List<string>(); // Resets to an empty list
     }
 }
