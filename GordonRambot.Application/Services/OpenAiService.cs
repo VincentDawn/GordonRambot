@@ -43,14 +43,14 @@ namespace GordonRambot.Services.Services
                     NucleusSamplingFactor = 0.95f,
                     DeploymentName = "gpt-35-turbo",
                     Messages =
-                {
-                    new ChatMessage(ChatRole.System, "Context: " + OpenAiServiceHelpers.Context),
-                    new ChatMessage(ChatRole.System, "Ingredients schema: " + OpenAiServiceHelpers.IngredientsJSONFormat),
-                    new ChatMessage(ChatRole.System, "Dietary requirements schema: " + OpenAiServiceHelpers.DietaryRequirementsJSONFormat),
-                    new ChatMessage(ChatRole.System, "Recipe data response schema" + OpenAiServiceHelpers.RecipeDatasJSONFormat),
-                    new ChatMessage(ChatRole.System, $"Ingredients: {ingredientsList}." + $"Dietary requirements {dietaryRequirements}"),
-                    new ChatMessage(ChatRole.User, OpenAiServiceHelpers.RecipesDatasPrompt)
-                },
+                    {
+                        new ChatMessage(ChatRole.System, $"Context: {OpenAiServiceHelpers.Context}"),
+                        new ChatMessage(ChatRole.System, $"Ingredients schema: {OpenAiServiceHelpers.IngredientsJSONFormat}"),
+                        new ChatMessage(ChatRole.System, $"Dietary requirements schema: {OpenAiServiceHelpers.DietaryRequirementsJSONFormat}"),
+                        new ChatMessage(ChatRole.System, $"Recipe data response schema: {OpenAiServiceHelpers.RecipeDatasJSONFormat}"),
+                        new ChatMessage(ChatRole.System, $"Ingredients: {ingredientsList}. Dietary requirements: {dietaryRequirements}"),
+                        new ChatMessage(ChatRole.User, OpenAiServiceHelpers.RecipesDatasPrompt)
+                    },
                     ChoiceCount = 1
                 };
 
@@ -93,14 +93,14 @@ namespace GordonRambot.Services.Services
                     NucleusSamplingFactor = 0.95f,
                     DeploymentName = "gpt-35-turbo",
                     Messages =
-                {
-                    new ChatMessage(ChatRole.System, "Context: " + OpenAiServiceHelpers.Context),
-                    new ChatMessage(ChatRole.System, "Recipe data schema" + OpenAiServiceHelpers.RecipeDataJSONFormat),
-                    new ChatMessage(ChatRole.System, "Dietary requirements schema: " + OpenAiServiceHelpers.DietaryRequirementsJSONFormat),
-                    new ChatMessage(ChatRole.System, "Recipe information schema: " + OpenAiServiceHelpers.RecipeInformationJSONFormat),
-                    new ChatMessage(ChatRole.System, $"Recipe data: {recipeData}." + $"Dietary requirements {dietaryRequirements}"),
-                    new ChatMessage(ChatRole.User, OpenAiServiceHelpers.RecipeInformationPrompt)
-                },
+                    {
+                        new ChatMessage(ChatRole.System, $"Context: {OpenAiServiceHelpers.Context}"),
+                        new ChatMessage(ChatRole.System, $"Recipe data schema: {OpenAiServiceHelpers.RecipeDataJSONFormat}"),
+                        new ChatMessage(ChatRole.System, $"Dietary requirements schema: {OpenAiServiceHelpers.DietaryRequirementsJSONFormat}"),
+                        new ChatMessage(ChatRole.System, $"Recipe information schema: {OpenAiServiceHelpers.RecipeInformationJSONFormat}"),
+                        new ChatMessage(ChatRole.System, $"Recipe data: {recipeData}. Dietary requirements: {dietaryRequirements}"),
+                        new ChatMessage(ChatRole.User, OpenAiServiceHelpers.RecipeInformationPrompt)
+                    },
                     ChoiceCount = 1
                 };
 
