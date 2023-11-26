@@ -62,7 +62,7 @@ namespace GordonRambot.Services.Services
 
                     if (content is not null)
                     {
-                        content = RemoveFormatting(content);
+                        content = OpenAiServiceHelpers.RemoveFormatting(content);
 
                         return new RecipesDataFromRequirementsResponse()
                         {
@@ -111,7 +111,7 @@ namespace GordonRambot.Services.Services
 
                     if (content is not null)
                     {
-                        content = RemoveFormatting(content);
+                        content = OpenAiServiceHelpers.RemoveFormatting(content);
 
                         return JsonSerializer.Deserialize<RecipeInformationFromRecipeResponse>(content);
                     }
@@ -123,12 +123,6 @@ namespace GordonRambot.Services.Services
             }
 
             return null;
-        }
-
-        private static string RemoveFormatting(string content)
-        {
-            content = content.Replace("\n", "").Replace("\r", "");
-            return content;
         }
     }
 }

@@ -21,4 +21,11 @@
     internal const string RecipesDatasPrompt = "Create up to 6 recipeDatas that are innovative and adhere to the dietary requirements, using the supplied ingredients. Respond with minified JSON.";
 
     internal const string RecipeInformationPrompt = "Based on the recipe data I have provided, create a set of cooking instructions that comprehensively describe how to prepare the dish. Please ensure the instructions are clear and easy to follow, matching the specifics of your recipe. Return both the original recipe data, with ingredients used, and the newly formulated cooking instructions. Do not number the instructions. Get the bacon.  Respond with minified JSON.";
+
+    // Functions
+    internal static string RemoveFormatting(string content)
+    {
+        content = content.Replace("\n", "").Replace("\r", "");
+        return content;
+    }
 }
