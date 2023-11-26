@@ -1,0 +1,53 @@
+@page "/settings"
+@inject NavigationManager NavigationManager
+
+<h1>Settings</h1>
+
+<div>
+    <h2>OpenAI Key</h2>
+    <button @onclick="ShowPopup">Set OpenAI Key</button>
+    @if (showPopup)
+    {
+        <div class="popup">
+            <div class="popup-content">
+                <input type="text" @bind="openAIKeyInput" />
+                <button @onclick="SaveKey">Submit</button>
+                <button @onclick="ClosePopup">Cancel</button>
+            </div>
+        </div>
+    }
+</div>
+
+<div>
+    <h2>Allergens</h2>
+    <!-- Input for Allergens -->
+</div>
+
+<button class="btn-back" @onclick="GoBack">Back</button>
+
+@code {
+    private bool showPopup = false;
+    private string openAIKeyInput;
+
+    private void ShowPopup()
+    {
+        showPopup = true;
+    }
+
+    private void ClosePopup()
+    {
+        showPopup = false;
+    }
+
+    private void SaveKey()
+    {
+        // Save the key to a variable, or handle as needed
+        var savedOpenAIKey = openAIKeyInput;
+        ClosePopup();
+    }
+
+    private void GoBack()
+    {
+        NavigationManager.NavigateTo("/");
+    }
+}

@@ -1,19 +1,27 @@
 @page "/"
-
+@using GordonRambot
 @using GordonRambot.Components.Pages.TestComponents
+@inject NavigationManager NavigationManager
 
 <div class="home-page">
-    <h1>Welcome to Gordon Rambot!</h1>
+     <img src="/Images/rambot.png" alt="Rambot Icon" class="rambot-icon">
+     <h1>Welcome to Gordon Rambot</h1>
     <div class="component">
-        <h2>Select Ingredients</h2>
         <SelectIngredients></SelectIngredients>
     </div>
     <div class="component">
-        <h2>Select Recipe</h2>
         <SelectRecipe></SelectRecipe>
     </div>
     <div class="component">
         <h2>Upload Image</h2>
         <UploadImage></UploadImage>
     </div>
+    <button class="btn-settings" @onclick="GoToSettings">Go to Settings</button>
 </div>
+
+@code {
+    private void GoToSettings()
+    {
+        NavigationManager.NavigateTo("/settings");
+    }
+}
