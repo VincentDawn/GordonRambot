@@ -1,4 +1,5 @@
-﻿using Azure.AI.OpenAI;
+﻿using Azure;
+using Azure.AI.OpenAI;
 using GordonRambot.Services.Settings;
 using GordonRambot.Shared.Clients.API_Client;
 using GordonRambot.Shared.Clients.API_Client.DTOs;
@@ -18,7 +19,7 @@ namespace GordonRambot.Services.Services
             var uri = new Uri(options.Value.Url);
             var key = options.Value.Key;
             var githubAlias = options.Value.GitHubAlias;
-            var credentials = new Azure.AzureKeyCredential($"{key}/{githubAlias}");
+            var credentials = new AzureKeyCredential($"{key}/{githubAlias}");
 
             _openAIClient = new OpenAIClient(uri, credentials);
         }
