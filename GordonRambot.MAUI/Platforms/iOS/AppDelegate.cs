@@ -1,6 +1,6 @@
 ﻿using Foundation;
 
-namespace GordonRambot
+namespace GordonRambot.Platforms.iOS
 {
     [Register("AppDelegate")]
     public class AppDelegate : MauiUIApplicationDelegate

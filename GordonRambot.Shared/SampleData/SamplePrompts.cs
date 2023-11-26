@@ -1,7 +1,7 @@
 ﻿using GordonRambot.Shared.Clients.API_Client.DTOs;
 using System.Text.Json;
 
-namespace GordonRambot.Shared.Samples
+namespace GordonRambot.Shared.SampleData
 {
     public static class SamplePrompts
     {
