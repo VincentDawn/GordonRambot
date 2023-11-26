@@ -31,7 +31,7 @@ namespace GordonRambot.Services.Services
         // Use cases
         private const string GenerateIngredientsFromImageInstructions = "";
 
-        private const string RecipesDatasInstructions = "Create up to 6 recipes that are innovative and adhere to the dietary requirements, using the supplied ingredients. Respond with minified JSON.";
+        private const string RecipesDatasInstructions = "Create up to 6 recipeDatas that are innovative and adhere to the dietary requirements, using the supplied ingredients. Respond with minified JSON.";
 
         private const string RecipeInformationInstructions = "Based on the recipe data I have provided, create a set of cooking instructions that comprehensively describe how to prepare the dish. Please ensure the instructions are clear and easy to follow, matching the specifics of your recipe. Return both the original recipe data, with ingredients used, and the newly formulated cooking instructions. Do not number the instructions. Get the bacon.  Respond with minified JSON.";
 
@@ -71,7 +71,7 @@ namespace GordonRambot.Services.Services
                     new ChatMessage(ChatRole.System, "Dietary requirements schema: " + DietaryRequirementsJSONFormat),
                     new ChatMessage(ChatRole.System, "Recipe data response schema" + RecipeDatasJSONFormat),
                     new ChatMessage(ChatRole.System, $"Ingredients: {ingredientsList}." + $"Dietary requirements {dietaryRequirements}"),
-                    new ChatMessage(ChatRole.Assistant, RecipesDatasInstructions)
+                    new ChatMessage(ChatRole.User, RecipesDatasInstructions)
                 },
                     ChoiceCount = 1
                 };
@@ -121,7 +121,7 @@ namespace GordonRambot.Services.Services
                     new ChatMessage(ChatRole.System, "Dietary requirements schema: " + DietaryRequirementsJSONFormat),
                     new ChatMessage(ChatRole.System, "Recipe information schema: " + RecipeInformationJSONFormat),
                     new ChatMessage(ChatRole.System, $"Recipe data: {recipeData}." + $"Dietary requirements {dietaryRequirements}"),
-                    new ChatMessage(ChatRole.Assistant, RecipeInformationInstructions)
+                    new ChatMessage(ChatRole.User, RecipeInformationInstructions)
                 },
                     ChoiceCount = 1
                 };
