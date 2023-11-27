@@ -59,10 +59,10 @@
 
 @code {
     [Parameter]
-    public RecipeData RecipeData { get; set; }
+    public RecipeData RecipeData { get; set; } = null!;
 
     [Parameter]
-    public List<string> Instructions { get; set; }
+    public List<string> Instructions { get; set; } = null!;
 
     [Parameter]
     public EventCallback Restart { get; set; }

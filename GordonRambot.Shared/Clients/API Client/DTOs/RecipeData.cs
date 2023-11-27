@@ -2,12 +2,12 @@
 {
     public class RecipeData
     {
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public string Cuisine { get; set; }
-        public IList<string> Tags { get; set; }
-        public string SpiceLevel { get; set; }
-        public string PortionSize { get; set; }
+        public string Name { get; set; } = null!;
+        public string Description { get; set; } = null!;
+        public string Cuisine { get; set; } = null!;
+        public IList<string> Tags { get; set; } = null!;
+        public string SpiceLevel { get; set; } = null!;
+        public string PortionSize { get; set; } = null!;
         public int ServingCount { get; set; }
 
         // Nutritional Information per dish
@@ -19,6 +19,6 @@
         public int TotalSugarGrams { get; set; }
         public int TotalSaltGrams { get; set; }
 
-        public IList<Ingredient> Ingredients { get; set; }
+        public IList<Ingredient> Ingredients { get; set; } = null!;
     }
 }

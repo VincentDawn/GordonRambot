@@ -1,6 +1,6 @@
 ﻿@using GordonRambot.Shared.Clients.API_Client
 @using GordonRambot.Shared.Clients.API_Client.DTOs
-@using GordonRambot.Shared.Samples
+@using GordonRambot.Shared.SampleData
 
 @inject IApiClient ApiClient
 
@@ -67,7 +67,7 @@
 
 @code {
     public string Text = "";
-    public RecipeData RecipeData = null;
+    public RecipeData? RecipeData = null;
     public IEnumerable<string> Instructions = new List<string>();
     public bool IsButtonDisabled = false;
 

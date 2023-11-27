@@ -1,7 +1,7 @@
 ﻿@using GordonRambot.Shared.Clients.API_Client.DTOs
 <h3>ShowRecipesComponent</h3>
 
-@if (RecipeDatas is not null && RecipeDatas.Any())
+@if (RecipeDatas.Any())
 {
     <table class="table">
         <thead>
@@ -55,7 +55,7 @@
 
 @code {
     [Parameter]
-    public List<RecipeData> RecipeDatas { get; set; }
+    public List<RecipeData> RecipeDatas { get; set; } = null!;
 
     [Parameter]
     public EventCallback GetRecipeInstructions { get; set; }

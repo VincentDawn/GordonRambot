@@ -40,7 +40,7 @@ else
 
 @code {
     [Parameter]
-    public List<Ingredient> Ingredients { get; set; }
+    public List<Ingredient> Ingredients { get; set; } = null!;
 
     [Parameter]
     public EventCallback GetRecipes { get; set; }

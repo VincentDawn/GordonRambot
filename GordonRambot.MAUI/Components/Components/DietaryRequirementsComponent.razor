@@ -56,7 +56,7 @@ else if (CurrentStep == DietaryRequirementSteps.NumberOfServings)
 
 @code {
     [Parameter]
-    public DietaryRequirements DietaryRequirements { get; set; }
+    public DietaryRequirements DietaryRequirements { get; set; } = null!;
 
     private DietaryRequirementSteps CurrentStep;
 
