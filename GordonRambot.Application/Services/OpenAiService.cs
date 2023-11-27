@@ -38,9 +38,8 @@ namespace GordonRambot.Services.Services
 
                 var chatCompletionsOptions = new ChatCompletionsOptions()
                 {
-                    MaxTokens = 2048,
-                    Temperature = 0.7f,
-                    NucleusSamplingFactor = 0.95f,
+                    MaxTokens = int.MaxValue,
+                    Temperature = 1.0f,
                     DeploymentName = "gpt-35-turbo",
                     Messages =
                     {
@@ -88,9 +87,8 @@ namespace GordonRambot.Services.Services
 
                 var chatCompletionsOptions = new ChatCompletionsOptions()
                 {
-                    MaxTokens = 2048,
-                    Temperature = 0.7f,
-                    NucleusSamplingFactor = 0.95f,
+                    MaxTokens = int.MaxValue,
+                    NucleusSamplingFactor = 0.20f,
                     DeploymentName = "gpt-35-turbo",
                     Messages =
                     {
