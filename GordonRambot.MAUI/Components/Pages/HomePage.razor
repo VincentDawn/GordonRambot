@@ -7,15 +7,19 @@
 @inject NavigationManager NavigationManager
 
 <div class="home-page">
-    <img src="/Images/rambot.png" alt="Rambot Icon" class="rambot-icon">
+    <div class="center-rectangle">
+     <div class="circle-above-title"></div>
+        <img src="/Images/rambot.png" alt="Rambot Icon" class="rambot-icon">
 
-    @if (CurrentUserFlowStep == UserFlowStep.None)
-    {
-        <h1>Welcome to Gordon Rambot</h1>
-        <h2>SOME INTRO TEXT</h2>
-
-        <button class="btn-settings" @onclick="GoToNextStep">Lets go!</button>
-    }
+        @if (CurrentUserFlowStep == UserFlowStep.None)
+        {
+            <span class="welcome-text">Welcome to</span>
+            <h1>Gordon Rambot</h1>
+        <p class="home-paragraph">Introducing Gordon Rambot, your AI culinary companion! Tailored for the home cook, this app, crafted with MAUI technology, effortlessly suggests recipes to match your tastes, dietary needs, and pantry stock. Dive into a world where cuisine choice, allergy considerations, and ingredient availability seamlessly blend to inspire your cooking journey, right at your fingertips. Welcome to a smarter, personalized way of cooking!</p>
+            <div class="btn-container">
+                <button class="btn-settings" @onclick="GoToNextStep">Let's go!</button>
+            </div>
+        }
     else if (CurrentUserFlowStep == UserFlowStep.SetAllergies)
     {
         <h1>Allergies</h1>
@@ -71,6 +75,7 @@
 
     @* <button class="btn-settings" @onclick="GoToSettings">Go to Settings</button> *@
 
+    </div>
 </div>
 
 @code {
@@ -145,3 +150,4 @@
         RecipeInstructions = new List<string>(); // Resets to an empty list
     }
 }
+
