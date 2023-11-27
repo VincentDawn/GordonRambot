@@ -6,9 +6,9 @@
     justify-content: center;
     padding: 20px;
     min-height: 100vh; 
-    background: linear-gradient(to top, #0d0604, #776f69);    color: #333;
+/*    background: linear-gradient(to top, #0d0604, #776f69);    color: #333;
     background-size: cover;
-    background-position: center;
+    background-position: center;*/
 }
 
 .home-page h1 {
@@ -28,28 +28,37 @@
     font-size: 1.25em; /* Smaller font size */
     color: #333; /* Adjust the color as needed */
     text-align: center;
-    margin-bottom: 0; /* Reduce space below the text */
-    margin-top: -205px;
+    font-weight: bold;
+}
+
+.rambot-text {
+    font-size: 2em;
+    margin-top: 0.67em;
+    margin-bottom: 0.67em;
+    margin-left: 0;
+    margin-right: 0;
+    text-align: center;
     font-weight: bold;
 }
 
 
 .center-rectangle {
-    background: linear-gradient(to top, #b2947c, #faebda);  
-    border-radius: 15px; 
+    background: linear-gradient(to top, #b2947c, #faebda);
+    border-radius: 15px;
     padding: 40px;
     margin: auto;
     width: 80%;
     max-width: 600px;
     margin-top: 25vh;
-    height: 80vh;
-    display: flex;
+/*    min-height: 80vh;
+*/    display: flex;
     flex-direction: column;
-    justify-content: space-between;
     align-items: center;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4), /* Enhanced shadow for depth */
-                0 16px 32px rgba(0, 0, 0, 0.2); /* Additional layer of shadow */
-    border: 1px solid rgba(255, 255, 255, 0.2); /* Subtle border for 3D effect */
+    0 16px 32px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    flex-wrap: nowrap;
+    align-content: center;
 }
 
 .rambot-icon {
@@ -122,3 +131,11 @@
 .home-paragraph {
     margin-top: -350px; /* Move up the paragraph */
 }
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* This will push the button to the bottom */
+    height: 100%; /* Set the height to fill the parent or viewport */
+}
+

@@ -11,72 +11,84 @@
 @inject NavigationManager NavigationManager
 @inject IApiClient ApiClient
 
-<div class="home-page">
-    <div class="center-rectangle">
-     <div class="circle-above-title"></div>
-    <img src="/Images/rambot.png" alt="Rambot Icon" class="rambot-icon">
-
-    @if (CurrentUserFlowStep == UserFlowStep.None)
-    {
-            <span class="welcome-text">Welcome to</span>
-            <h1>Gordon Rambot</h1>
-        <p class="home-paragraph">Introducing Gordon Rambot, your AI culinary companion! Tailored for the home cook, this app, crafted with MAUI technology, effortlessly suggests recipes to match your tastes, dietary needs, and pantry stock. Dive into a world where cuisine choice, allergy considerations, and ingredient availability seamlessly blend to inspire your cooking journey, right at your fingertips. Welcome to a smarter, personalized way of cooking!</p>
-            <div class="btn-container">
-                <button class="btn-settings" @onclick="GoToNextStep">Let's go!</button>
+<div class="container-fluid">
+    <div class="home-page">
+        <div class="center-rectangle">
+            <div class="mb-5">
+                <div class="circle-above-title"></div>
+                <img src="/Images/rambot.png" alt="Rambot Icon" class="rambot-icon">
             </div>
-    }
-    else if (CurrentUserFlowStep == UserFlowStep.SetDietaryRequirements)
-    {
-        <DietaryRequirementsComponent DietaryRequirements="DietaryRequirements" GoToNextParentStep="GoToNextStep" GoToPreviousParentStep="GoToPreviousStep" />
-    }
-    else if (CurrentUserFlowStep == UserFlowStep.UploadImage)
-    {
-        @* Step 99 *@
-        <h1>Imageuplaod</h1>
-        <h2>Instructions</h2>
 
-    }
-    else if (CurrentUserFlowStep == UserFlowStep.SetIngredients)
-    {
-        <IngredientsComponent Ingredients="@Ingredients" GetRecipes="GetRecipes" GoToPreviousParentStep="GoToPreviousStep" />
-    }
-    else if (CurrentUserFlowStep == UserFlowStep.ShowPossibleRecipes)
-    {
-        if (IsLoading)
-        {
-            <h1>Loading...</h1>
-        }
-        else if (RecipeDatas?.Any() ?? false)
-        {
-            <ShowRecipesComponent RecipeDatas="@RecipeDatas" SelectedRecipe="@SelectedRecipe" SetSelectedRecipe="SetSelectedRecipe" GetRecipeInstructions="@GetRecipeInstructions" GoToPreviousParentStep="GoToPreviousStep" />
-        }
-        else
-        {
-            <p>Unable to create any recipes.</p>
-            <button class="btn-settings" @onclick="GoToPreviousStep">Previous main step</button>
-        }
+            <div class="container d-flex flex-column justify-content-center">
+                @if (CurrentUserFlowStep == UserFlowStep.None)
+                {
+                    <div class="row">
+                        <p class="welcome-text">Welcome to</p>
+                        <p class="rambot-text">Gordon Rambot</p>
+                    </div>
+                    <div class="row">
+                        <p>Introducing Gordon Rambot, your AI culinary companion! Tailored for the home cook, this app, crafted with MAUI technology, effortlessly suggests recipes to match your tastes, dietary needs, and pantry stock. Dive into a world where cuisine choice, allergy considerations, and ingredient availability seamlessly blend to inspire your cooking journey, right at your fingertips. Welcome to a smarter, personalized way of cooking!</p>
+                    </div>
 
-    }
-    else if (CurrentUserFlowStep == UserFlowStep.ShowInstructionsForRecipe)
-    {
-        if (IsLoading)
-        {
-            <h1>Loading...</h1>
-        }
-        else if (FinalRecipeData is not null)
-        {
-            <ShowRecipeAndInstructionsComponent Instructions="@RecipeInstructions" RecipeData="@FinalRecipeData" Restart="Restart" GoToPreviousParentStep="GoToPreviousStep" />
-        }
-        else
-        {
-            <p>Unable to create recipe.</p>
-            <button class="btn-settings" @onclick="GoToPreviousStep">Previous main step</button>
-        }
-    }
+                    <div class="row mt-5">
+                        <div class="btn-container d-flex justify-content-center">
+                            <button class="btn-settings" @onclick="GoToNextStep">Let's go!</button>
+                        </div>
+                    </div>
+                }
+                else if (CurrentUserFlowStep == UserFlowStep.SetDietaryRequirements)
+                {
+                    <DietaryRequirementsComponent DietaryRequirements="DietaryRequirements" GoToNextParentStep="GoToNextStep" GoToPreviousParentStep="GoToPreviousStep" />
+                }
+                else if (CurrentUserFlowStep == UserFlowStep.UploadImage)
+                {
+                    @* Step 99 *@
+                    <h1>Imageuplaod</h1>
+                    <h2>Instructions</h2>
 
-    @* <button class="btn-settings" @onclick="GoToSettings">Go to Settings</button> *@
+                }
+                else if (CurrentUserFlowStep == UserFlowStep.SetIngredients)
+                {
+                    <IngredientsComponent Ingredients="@Ingredients" GetRecipes="GetRecipes" GoToPreviousParentStep="GoToPreviousStep" />
+                }
+                else if (CurrentUserFlowStep == UserFlowStep.ShowPossibleRecipes)
+                {
+                    if (IsLoading)
+                    {
+                        <h1>Loading...</h1>
+                    }
+                    else if (RecipeDatas?.Any() ?? false)
+                    {
+                        <ShowRecipesComponent RecipeDatas="@RecipeDatas" SelectedRecipe="@SelectedRecipe" SetSelectedRecipe="SetSelectedRecipe" GetRecipeInstructions="@GetRecipeInstructions" GoToPreviousParentStep="GoToPreviousStep" />
+                    }
+                    else
+                    {
+                        <p>Unable to create any recipes.</p>
+                        <button class="btn-settings" @onclick="GoToPreviousStep">Previous main step</button>
+                    }
 
-</div>
+                }
+                else if (CurrentUserFlowStep == UserFlowStep.ShowInstructionsForRecipe)
+                {
+                    if (IsLoading)
+                    {
+                        <h1>Loading...</h1>
+                    }
+                    else if (FinalRecipeData is not null)
+                    {
+                        <ShowRecipeAndInstructionsComponent Instructions="@RecipeInstructions" RecipeData="@FinalRecipeData" Restart="Restart" GoToPreviousParentStep="GoToPreviousStep" />
+                    }
+                    else
+                    {
+                        <p>Unable to create recipe.</p>
+                        <button class="btn-settings" @onclick="GoToPreviousStep">Previous main step</button>
+                    }
+                }
+
+                @* <button class="btn-settings" @onclick="GoToSettings">Go to Settings</button> *@
+            </div>
+        </div>
+    </div>
 </div>
 
 @code {
