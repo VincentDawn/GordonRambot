@@ -1,0 +1,78 @@
+﻿@using GordonRambot.Shared.Clients.API_Client.DTOs
+<h3>ShowRecipesComponent</h3>
+
+@if (RecipeDatas is not null && RecipeDatas.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Cuisine</th>
+                <th>Tags</th>
+                <th>Spice Level</th>
+                <th>Portion Size</th>
+                <th>Serving Count</th>
+                <th>Estimated Calories</th>
+                <th>Total Fat (g)</th>
+                <th>Total Carbs (g)</th>
+                <th>Total Protein (g)</th>
+                <th>Total Fiber (g)</th>
+                <th>Total Sugar (g)</th>
+                <th>Total Salt (g)</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var recipe in RecipeDatas)
+            {
+                <tr>
+                    <td>@recipe.Name</td>
+                    <td>@recipe.Description</td>
+                    <td>@recipe.Cuisine</td>
+                    <td>@string.Join(", ", recipe.Tags)</td>
+                    <td>@recipe.SpiceLevel</td>
+                    <td>@recipe.PortionSize</td>
+                    <td>@recipe.ServingCount</td>
+                    <td>@recipe.EstimatedCalories</td>
+                    <td>@recipe.TotalFatGrams</td>
+                    <td>@recipe.TotalCarbsGrams</td>
+                    <td>@recipe.TotalProteinGrams</td>
+                    <td>@recipe.TotalFiberGrams</td>
+                    <td>@recipe.TotalSugarGrams</td>
+                    <td>@recipe.TotalSaltGrams</td>
+                    <td>
+                        <button class="btn-settings" @onclick="() => SelectRecipe(recipe)">Select</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <button class="btn-settings" @onclick="GoToPreviousParentStep">Previous main step</button>
+
+}
+
+@code {
+    [Parameter]
+    public List<RecipeData> RecipeDatas { get; set; }
+
+    [Parameter]
+    public EventCallback GetRecipeInstructions { get; set; }
+
+    [Parameter]
+    public EventCallback GoToPreviousParentStep { get; set; }
+
+    [Parameter]
+    public RecipeData? SelectedRecipe { get; set; }
+
+    [Parameter]
+    public EventCallback<RecipeData> SetSelectedRecipe { get; set; }
+
+    private void SelectRecipe(RecipeData selectedRecipe)
+    {
+        SelectedRecipe = selectedRecipe;
+        SetSelectedRecipe.InvokeAsync(SelectedRecipe);
+        GetRecipeInstructions.InvokeAsync();
+    }
+}

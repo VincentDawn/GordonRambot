@@ -1,0 +1,12 @@
+﻿<h3>Number of Servings</h3>
+
+<div class="form-group">
+    <label for="numberOfServings">Number of Servings:</label>
+    <input type="number" id="numberOfServings" class="form-control"
+           min="1" max="99" @bind="NumberOfServings" />
+</div>
+
+@code {
+    [Parameter]
+    public int NumberOfServings { get; set; }
+}

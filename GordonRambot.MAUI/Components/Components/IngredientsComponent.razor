@@ -1,0 +1,66 @@
+﻿@using GordonRambot.Shared.Clients.API_Client.DTOs
+<h3>Ingredients List</h3>
+<h2>Instructions</h2>
+@if (Ingredients.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Weight (Grams)</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var ingredient in Ingredients)
+            {
+                <tr>
+                    <td>@ingredient.Name</td>
+                    <td>@ingredient.WeightGrams</td>
+                    <td><button class="btn btn-danger" @onclick="() => RemoveIngredient(ingredient)">Remove</button></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No ingredients added yet.</p>
+}
+
+<div>
+    <input type="text" placeholder="Ingredient Name" @bind="newIngredient.Name" />
+    <input type="number" placeholder="Weight in Grams" min="0" @bind="newIngredient.WeightGrams" />
+    <button class="btn btn-primary" @onclick="AddIngredient">Add Ingredient</button>
+</div>
+
+
+<button class="btn-settings" @onclick="() => GetRecipes.InvokeAsync()">Complete</button>
+
+
+@code {
+    [Parameter]
+    public List<Ingredient> Ingredients { get; set; }
+
+    [Parameter]
+    public EventCallback GetRecipes { get; set; }
+
+    [Parameter]
+    public EventCallback GoToPreviousParentStep { get; set; }
+
+    private Ingredient newIngredient = new Ingredient() { Name = String.Empty, WeightGrams = default };
+
+    private void AddIngredient()
+    {
+        if (!string.IsNullOrWhiteSpace(newIngredient.Name) && newIngredient.WeightGrams > 0)
+        {
+            Ingredients.Add(new Ingredient { Name = newIngredient.Name, WeightGrams = newIngredient.WeightGrams });
+            newIngredient = new Ingredient() { Name = String.Empty, WeightGrams = default }; // Reset for next input
+        }
+    }
+
+    private void RemoveIngredient(Ingredient ingredient)
+    {
+        Ingredients.Remove(ingredient);
+    }
+}

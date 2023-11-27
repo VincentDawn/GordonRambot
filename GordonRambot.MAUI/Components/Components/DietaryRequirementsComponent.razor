@@ -1,0 +1,98 @@
+﻿@using GordonRambot.Enums
+@using GordonRambot.Shared.Clients.API_Client.DTOs
+<h3>DietaryRequirementsComponent</h3>
+
+@if (CurrentStep == DietaryRequirementSteps.None)
+{
+    <h2>Instructions</h2>
+
+    <button class="btn-settings" @onclick="GoToNextStep">Next</button>
+    <button class="btn-settings" @onclick="() => GoToPreviousParentStep.InvokeAsync()">Go back</button>
+}
+else if (CurrentStep == DietaryRequirementSteps.Allergies)
+{
+    <AllergiesComponent Allergies="@DietaryRequirements.Allergies" />
+
+    <button class="btn-settings" @onclick="GoToNextStep">Next</button>
+    <button class="btn-settings" @onclick="GoToPreviousStep">Previous</button>
+}
+else if (CurrentStep == DietaryRequirementSteps.CuisineStyles)
+{
+    <CuisineStylesComponent CuisineStyles="@DietaryRequirements.CuisineStyles" />
+
+    <button class="btn-settings" @onclick="GoToNextStep">Next</button>
+    <button class="btn-settings" @onclick="GoToPreviousStep">Previous</button>
+}
+else if (CurrentStep == DietaryRequirementSteps.NutritionalConstraints)
+{
+    <NutritionalConstraintsComponent NutritionalConstraints="@DietaryRequirements.NutritionalConstraints" />
+
+    <button class="btn-settings" @onclick="GoToNextStep">Next</button>
+    <button class="btn-settings" @onclick="GoToPreviousStep">Previous</button>
+}
+else if (CurrentStep == DietaryRequirementSteps.FoodTags)
+{
+    <FoodTagsComponent FoodTags="@DietaryRequirements.FoodTags" />
+
+    <button class="btn-settings" @onclick="GoToNextStep">Next</button>
+    <button class="btn-settings" @onclick="GoToPreviousStep">Previous</button>
+}
+else if (CurrentStep == DietaryRequirementSteps.SpiceLevel)
+{
+    <SpiceLevelComponent SpiceLevel="@DietaryRequirements.SpiceLevel" />
+
+    <button class="btn-settings" @onclick="GoToNextStep">Next</button>
+    <button class="btn-settings" @onclick="GoToPreviousStep">Previous</button>
+}
+else if (CurrentStep == DietaryRequirementSteps.NumberOfServings)
+{
+    <h2>NumberOfServings</h2>
+    
+    <NumberOfServingsComponent NumberOfServings="@DietaryRequirements.NumberOfServings" />
+
+    <button class="btn-settings" @onclick="() => GoToNextParentStep.InvokeAsync()">Complete</button>
+    <button class="btn-settings" @onclick="GoToPreviousStep">Previous</button>
+}
+
+@code {
+    [Parameter]
+    public DietaryRequirements DietaryRequirements { get; set; }
+
+    private DietaryRequirementSteps CurrentStep;
+
+    [Parameter]
+    public EventCallback GoToNextParentStep { get; set; }
+
+    [Parameter]
+    public EventCallback GoToPreviousParentStep { get; set; }
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        // Start at first step
+        CurrentStep = DietaryRequirementSteps.None;
+
+        // Call base method
+        await base.OnInitializedAsync();
+    }
+
+    private void GoToStep(DietaryRequirementSteps userFlowStep)
+    {
+        CurrentStep = userFlowStep;
+        StateHasChanged();
+    }
+
+    private void GoToNextStep()
+    {
+        var nextStep = (DietaryRequirementSteps)(((int)CurrentStep) + 1);
+        GoToStep(nextStep);
+    }
+
+    private void GoToPreviousStep()
+    {
+        var previousStep = (DietaryRequirementSteps)(((int)CurrentStep) - 1);
+        GoToStep(previousStep);
+    }
+
+
+}

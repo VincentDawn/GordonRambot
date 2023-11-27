@@ -1,0 +1,53 @@
+﻿@using GordonRambot.Shared.Clients.API_Client.DTOs
+<h3>NutritionalConstraintsComponent</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Nutrient</th>
+            <th>Min Value</th>
+            <th>Max Value</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Calories</td>
+            <td><InputNumber @bind-Value="NutritionalConstraints.MinCalories" /></td>
+            <td><InputNumber @bind-Value="NutritionalConstraints.MaxCalories" /></td>
+        </tr>
+        <tr>
+            <td>Fat (grams)</td>
+            <td><InputNumber @bind-Value="NutritionalConstraints.MinFatGrams" /></td>
+            <td><InputNumber @bind-Value="NutritionalConstraints.MaxFatGrams" /></td>
+        </tr>
+        <tr>
+            <td>Carbohydrates (grams)</td>
+            <td><InputNumber @bind-Value="NutritionalConstraints.MinCarbsGrams" /></td>
+            <td><InputNumber @bind-Value="NutritionalConstraints.MaxCarbsGrams" /></td>
+        </tr>
+        <tr>
+            <td>Fiber (grams)</td>
+            <td><InputNumber @bind-Value="NutritionalConstraints.MinFiberGrams" /></td>
+            <td><InputNumber @bind-Value="NutritionalConstraints.MaxFiberGrams" /></td>
+        </tr>
+        <tr>
+            <td>Salt (grams)</td>
+            <td><InputNumber @bind-Value="NutritionalConstraints.MinSaltGrams" /></td>
+            <td><InputNumber @bind-Value="NutritionalConstraints.MaxSaltGrams" /></td>
+        </tr>
+        <tr>
+            <td>Protein (grams)</td>
+            <td><InputNumber @bind-Value="NutritionalConstraints.MinProteinGrams" /></td>
+            <td><InputNumber @bind-Value="NutritionalConstraints.MaxProteinGrams" /></td>
+        </tr>
+        <tr>
+            <td>Sugar (grams)</td>
+            <td><InputNumber @bind-Value="NutritionalConstraints.MinSugarGrams" /></td>
+            <td><InputNumber @bind-Value="NutritionalConstraints.MaxSugarGrams" /></td>
+        </tr>
+    </tbody>
+</table>
+
+@code {
+    [Parameter]
+    public NutritionalConstraints? NutritionalConstraints { get; set; }
+}

@@ -1,42 +1,31 @@
 @page "/"
+
 @using GordonRambot
 @using GordonRambot.Components.Components
 @using GordonRambot.Components.Pages.TestComponents
 @using GordonRambot.Enums
+@using GordonRambot.Shared.Clients.API_Client
 @using GordonRambot.Shared.Clients.API_Client.DTOs
+@using GordonRambot.Shared.Samples
+
 @inject NavigationManager NavigationManager
+@inject IApiClient ApiClient
 
 <div class="home-page">
     <div class="center-rectangle">
      <div class="circle-above-title"></div>
         <img src="/Images/rambot.png" alt="Rambot Icon" class="rambot-icon">
 
-        @if (CurrentUserFlowStep == UserFlowStep.None)
-        {
-            <span class="welcome-text">Welcome to</span>
-            <h1>Gordon Rambot</h1>
-        <p class="home-paragraph">Introducing Gordon Rambot, your AI culinary companion! Tailored for the home cook, this app, crafted with MAUI technology, effortlessly suggests recipes to match your tastes, dietary needs, and pantry stock. Dive into a world where cuisine choice, allergy considerations, and ingredient availability seamlessly blend to inspire your cooking journey, right at your fingertips. Welcome to a smarter, personalized way of cooking!</p>
-            <div class="btn-container">
-                <button class="btn-settings" @onclick="GoToNextStep">Let's go!</button>
-            </div>
-        }
-    else if (CurrentUserFlowStep == UserFlowStep.SetAllergies)
+    @if (CurrentUserFlowStep == UserFlowStep.None)
     {
-        <h1>Allergies</h1>
-        <h2>Instructions</h2>
+        <h1>Welcome to Gordon Rambot</h1>
+        <h2>SOME INTRO TEXT</h2>
 
-        <AllergiesComponent Allergies="@Allergies" />
-
-        <button class="btn-settings" @onclick="GoToNextStep">Next</button>
-        <button class="btn-settings" @onclick="GoToPreviousStep">Previous</button>
+        <button class="btn-settings" @onclick="GoToNextStep">Lets go!</button>
     }
     else if (CurrentUserFlowStep == UserFlowStep.SetDietaryRequirements)
     {
-        <h1>Dietary requirements</h1>
-        <h2>Instructions</h2>
-
-        <button class="btn-settings" @onclick="GoToNextStep">Next</button>
-        <button class="btn-settings" @onclick="GoToPreviousStep">Previous</button>
+        <DietaryRequirementsComponent DietaryRequirements="DietaryRequirements" GoToNextParentStep="GoToNextStep" GoToPreviousParentStep="GoToPreviousStep" />
     }
     else if (CurrentUserFlowStep == UserFlowStep.UploadImage)
     {
@@ -44,33 +33,43 @@
         <h1>Imageuplaod</h1>
         <h2>Instructions</h2>
 
-
-
     }
     else if (CurrentUserFlowStep == UserFlowStep.SetIngredients)
     {
-        <h1>Set ingredients</h1>
-        <h2>Instructions</h2>
-
-
-        <button class="btn-settings" @onclick="GoToNextStep">Next</button>
-        <button class="btn-settings" @onclick="GoToPreviousStep">Previous</button>
+        <IngredientsComponent Ingredients="@Ingredients"  GetRecipes="GetRecipes" GoToPreviousParentStep="GoToPreviousStep" />
     }
     else if (CurrentUserFlowStep == UserFlowStep.ShowPossibleRecipes)
     {
-        <h1>Show recipes</h1>
-        <h2>Instructions</h2>
+        if (IsLoading)
+        {
+            <h1>Loading...</h1>
+        }
+        else if (RecipeDatas?.Any() ?? false)
+        {
+            <ShowRecipesComponent RecipeDatas="@RecipeDatas" SelectedRecipe="@SelectedRecipe" SetSelectedRecipe="SetSelectedRecipe" GetRecipeInstructions="@GetRecipeInstructions" GoToPreviousParentStep="GoToPreviousStep" />
+        }
+        else
+        {
+            <p>Unable to create any recipes.</p>
+            <button class="btn-settings" @onclick="GoToPreviousStep">Previous main step</button>
+        }
 
-        <button class="btn-settings" @onclick="GoToNextStep">Next</button>
-        <button class="btn-settings" @onclick="GoToPreviousStep">Previous</button>
     }
     else if (CurrentUserFlowStep == UserFlowStep.ShowInstructionsForRecipe)
     {
-        <h2>Show recipe instructions</h2>
-        <h2>Instructions</h2>
-
-        <button class="btn-settings" @onclick="Restart">Restart</button>
-        <button class="btn-settings" @onclick="GoToPreviousStep">Previous</button>
+        if (IsLoading)
+        {
+            <h1>Loading...</h1>
+        }
+        else if (FinalRecipeData is not null)
+        {
+            <ShowRecipeAndInstructionsComponent Instructions="@RecipeInstructions" RecipeData="@FinalRecipeData" Restart="Restart" GoToPreviousParentStep="GoToPreviousStep" />
+        }
+        else
+        {
+            <p>Unable to create recipe.</p>
+            <button class="btn-settings" @onclick="GoToPreviousStep">Previous main step</button>
+        }
     }
 
     @* <button class="btn-settings" @onclick="GoToSettings">Go to Settings</button> *@
@@ -82,29 +81,36 @@
     private UserFlowStep CurrentUserFlowStep;
 
     // Models
-    public List<string> Allergies = new List<string>();
-
-    public DietaryRequirements DietaryRequirements = null;
-
+    public DietaryRequirements DietaryRequirements = new DietaryRequirements()
+        {
+            Allergies = new List<string>(),
+            CuisineStyles = new List<string>(),
+            FoodTags = new List<string>(),
+            NumberOfServings = 1,
+            SpiceLevel = string.Empty,
+            NutritionalConstraints = new NutritionalConstraints()
+        };
     public List<Ingredient> Ingredients = new List<Ingredient>();
 
     public List<RecipeData> RecipeDatas = new List<RecipeData>();
-
     public RecipeData SelectedRecipe = null;
 
     public RecipeData FinalRecipeData = null;
-
     public List<string> RecipeInstructions = new List<string>();
 
+    private bool IsLoading = false;
+
+    private bool TestMode = true;
 
     protected override async Task OnInitializedAsync()
     {
         // Start at first step
         CurrentUserFlowStep = UserFlowStep.None;
 
-        // Clear out all the models
-        ResetProperties();
-
+        if (TestMode)
+        {
+            SetTestData();
+        }
 
         // Call base method
         await base.OnInitializedAsync();
@@ -132,6 +138,7 @@
         var previousStep = (UserFlowStep)(((int)CurrentUserFlowStep) - 1);
         GoToStep(previousStep);
     }
+
     private void Restart()
     {
         ResetProperties();
@@ -139,15 +146,94 @@
     }
 
 
-    public void ResetProperties()
+    private void ResetProperties()
     {
-        Allergies = new List<string>(); // Resets to an empty list
-        DietaryRequirements = null; // Resets to null
-        Ingredients = new List<Ingredient>(); // Resets to an empty list
-        RecipeDatas = new List<RecipeData>(); // Resets to an empty list
-        SelectedRecipe = null; // Resets to null
-        FinalRecipeData = null; // Resets to null
-        RecipeInstructions = new List<string>(); // Resets to an empty list
+        DietaryRequirements = new DietaryRequirements()
+            {
+                Allergies = new List<string>(),
+                CuisineStyles = new List<string>(),
+                FoodTags = new List<string>(),
+                NumberOfServings = 1,
+                SpiceLevel = string.Empty,
+                NutritionalConstraints = new NutritionalConstraints()
+            };
+        Ingredients = new List<Ingredient>();
+
+        RecipeDatas = new List<RecipeData>();
+        SelectedRecipe = null;
+
+        FinalRecipeData = null;
+        RecipeInstructions = new List<string>();
+    }
+
+    private void SetTestData()
+    {
+        DietaryRequirements = new DietaryRequirements()
+            {
+                Allergies = SamplePrompts.AllergiesSamples.SampleAllergies,
+                CuisineStyles = SamplePrompts.CuisineStylesSamples.SampleCuisineStyles,
+                FoodTags = SamplePrompts.FoodTagsSamples.SampleFoodTags,
+                NumberOfServings = 1,
+                SpiceLevel = SamplePrompts.SpiceLevelSamples.SampleSpiceLevel,
+                NutritionalConstraints = new NutritionalConstraints()
+            };
+        Ingredients = SamplePrompts.IngredientsSamples.SampleIngredients;
+
+        RecipeDatas = new List<RecipeData>();
+        SelectedRecipe = null;
+
+        FinalRecipeData = null;
+        RecipeInstructions = new List<string>();
+    }
+
+    private void SetSelectedRecipe(RecipeData recipe)
+    {
+        SelectedRecipe = recipe;
+    }
+
+    private async void GetRecipes()
+    {
+        IsLoading = true;
+
+        GoToNextStep();
+
+        var response = await ApiClient.GetRecipeDatas(new Shared.Clients.APIClient.Requests.RecipesDataFromRequirementsRequest()
+            {
+                DietaryRequirements = DietaryRequirements,
+                Ingredients = Ingredients
+            });
+
+        if (response is not null)
+        {
+            RecipeDatas = response.RecipeDatas;
+        }
+
+        IsLoading = false;
+
+        StateHasChanged();
+    }
+
+    private async void GetRecipeInstructions()
+    {
+        IsLoading = true;
+
+        GoToNextStep();
+
+        var response = await ApiClient.GetRecipeInformation(new Shared.Clients.APIClient.Requests.RecipeInformationFromRecipeRequest()
+            {
+                RecipeData = SelectedRecipe,
+                DietaryRequirements = DietaryRequirements
+            });
+
+        if (response is not null)
+        {
+            FinalRecipeData = response.RecipeData;
+            RecipeInstructions = response.RecipeInstructions;
+        }
+
+        IsLoading = false;
+
+        StateHasChanged();
     }
 }
 

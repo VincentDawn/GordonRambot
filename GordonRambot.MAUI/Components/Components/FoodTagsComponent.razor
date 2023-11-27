@@ -1,0 +1,51 @@
+﻿<h3>FoodTagsComponent</h3>
+@if (FoodTags.Any())
+{
+    <table class="table gr-tables">
+        <thead>
+            <tr>
+                <th>Food Tag</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var foodTag in FoodTags)
+            {
+                <tr>
+                    <td>@foodTag</td>
+                    <td>
+                        <button class="btn btn-danger btn-sm" @onclick="() => RemoveFoodTag(foodTag)">Remove</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No food tags listed.</p>
+}
+
+<input type="text" @bind="newFoodTag" />
+<button @onclick="AddFoodTag">Add Food Tag</button>
+
+@code {
+    [Parameter]
+    public List<string> FoodTags { get; set; }
+
+    private string newFoodTag = string.Empty;
+
+    private void AddFoodTag()
+    {
+        if (!string.IsNullOrWhiteSpace(newFoodTag))
+        {
+            FoodTags.Add(newFoodTag);
+            newFoodTag = string.Empty;
+        }
+    }
+
+    private void RemoveFoodTag(string foodTag)
+    {
+        FoodTags.Remove(foodTag);
+    }
+}

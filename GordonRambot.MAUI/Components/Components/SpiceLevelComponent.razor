@@ -1,0 +1,33 @@
+﻿<h3>SpiceLevelComponent</h3>
+<div class="form-group">
+    <label for="spiceLevelSelect">Select Spice Level:</label>
+    <select id="spiceLevelSelect" class="form-control" @bind="SpiceLevel">
+        @foreach (var level in spiceLevels)
+        {
+            <option value="@level">@level</option>
+        }
+    </select>
+</div>
+
+@code {
+    [Parameter]
+    public string SpiceLevel { get; set; }
+
+    private readonly List<string> spiceLevels = new List<string>
+    {
+        "Any", "None", "Mild", "Medium", "Hot", "Extra Hot"
+    };
+
+    protected override void OnInitialized()
+    {
+        if (string.IsNullOrEmpty(SpiceLevel))
+        {
+            SpiceLevel = "Any";
+        }
+    }
+
+    private void UpdateSpiceLevel(ChangeEventArgs e)
+    {
+        SpiceLevel = e.Value?.ToString();
+    }
+}
