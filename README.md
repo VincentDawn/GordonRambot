@@ -5,25 +5,33 @@ Gordon RamBot, inspired by Gordon Ramsay's persona, is an expert in culinary adv
 ## Setup and Run Instructions
 
 ### Windows
+
 The main class for the Windows platform is `App` in `App.xaml.cs`. This class initializes the application and creates the MauiApp.
 
 ### iOS
+
 The main class for the iOS platform is `AppDelegate` in `AppDelegate.cs`. This class creates the MauiApp.
 
 ### MacCatalyst
+
 The main class for the MacCatalyst platform is `AppDelegate` in `AppDelegate.cs`. This class creates the MauiApp.
 
 ### Tizen
+
 The main class for the Tizen platform is `Program` in `Main.cs`. This class creates the MauiApp and runs the application.
 
 ### Android
+
 The main class for the Android platform is `MainApplication` in `MainApplication.cs`. This class creates the MauiApp.
 
 ## Services
+
 The application uses the OpenAiService to generate recipes and cooking instructions. The helper functions in `OpenAiServiceHelpers.cs` are used to format the prompts and responses for the OpenAI service.
 
 ## User Interface
+
 The user interface of the application is built using the Maui framework. The main page of the application is `HomePage.razor`, which guides the user through the process of setting dietary requirements, uploading an image, setting ingredients, and viewing possible recipes and instructions.
 
 ## Contribution
+
 Contributions are welcome! Please submit issues or pull requests on GitHub. Follow the existing code style and write extensive tests for any new functionality.
