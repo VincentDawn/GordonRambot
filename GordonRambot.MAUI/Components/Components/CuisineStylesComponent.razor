@@ -1,4 +1,4 @@
-﻿<h3>CuisineStylesComponent</h3>
+﻿<h3 style="text-align: center; font-weight: bold;">Cuisine Styles</h3>
 @if (CuisineStyles.Any())
 {
     <table class="table gr-tables">
@@ -26,8 +26,8 @@ else
     <p>No cuisine styles listed.</p>
 }
 
-<input type="text" @bind="newCuisineStyle" />
-<button @onclick="AddCuisineStyle">Add Cuisine Style</button>
+<input type="text" @bind="newCuisineStyle" style="border-radius: 5px;" />
+<button class="btn-settings" @onclick="AddCuisineStyle">Add Cuisine Style</button>
 
 @code {
     [Parameter]

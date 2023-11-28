@@ -1,6 +1,5 @@
 ﻿@using GordonRambot.Shared.Clients.API_Client.DTOs
-<h3>Ingredients List</h3>
-<h2>Instructions</h2>
+<h3 style="text-align: center; font-weight: bold;">Ingredients List</h3>
 @if (Ingredients.Any())
 {
     <table class="table">
@@ -31,7 +30,7 @@ else
 <div>
     <input type="text" placeholder="Ingredient Name" @bind="newIngredient.Name" />
     <input type="number" placeholder="Weight in Grams" min="0" @bind="newIngredient.WeightGrams" />
-    <button class="btn btn-primary" @onclick="AddIngredient">Add Ingredient</button>
+    <button class="btn-settings" @onclick="AddIngredient">Add Ingredient</button>
 </div>
 
 

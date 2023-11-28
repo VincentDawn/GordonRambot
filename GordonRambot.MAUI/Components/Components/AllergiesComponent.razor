@@ -1,4 +1,4 @@
-﻿<h3>AllergiesComponent</h3>
+﻿<h3 style="text-align: center; font-weight: bold;">Allergies</h3>
 @if (Allergies.Any())
 {
     <table class="table gr-tables">
@@ -26,8 +26,8 @@ else
     <p>No allergies listed.</p>
 }
 
-<input type="text" @bind="newAllergy" />
-<button @onclick="AddAllergy">Add Allergy</button>
+<input type="text" @bind="newAllergy" style="border-radius: 5px;" />
+<button class="btn-settings" @onclick="AddAllergy">Add Allergy</button>
 
 @code {
     [Parameter]

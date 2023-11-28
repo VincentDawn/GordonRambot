@@ -1,4 +1,4 @@
-﻿<h3>FoodTagsComponent</h3>
+﻿<h3 style="text-align: center; font-weight: bold;">Food Tags</h3>
 @if (FoodTags.Any())
 {
     <table class="table gr-tables">
@@ -26,8 +26,8 @@ else
     <p>No food tags listed.</p>
 }
 
-<input type="text" @bind="newFoodTag" />
-<button @onclick="AddFoodTag">Add Food Tag</button>
+<input type="text" @bind="newFoodTag" style="border-radius: 5px;" />
+<button class="btn-settings" @onclick="AddFoodTag">Add Food Tag</button>
 
 @code {
     [Parameter]

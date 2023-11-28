@@ -1,10 +1,18 @@
 ﻿@using GordonRambot.Enums
 @using GordonRambot.Shared.Clients.API_Client.DTOs
-<h3>DietaryRequirementsComponent</h3>
 
 @if (CurrentStep == DietaryRequirementSteps.None)
 {
-    <h2>Instructions</h2>
+    <h2 style="text-align: center; font-weight: bold;">Instructions</h2>
+    <ol>
+        <li><strong>Enter Allergies:</strong> Start by listing any allergies you have.</li>
+        <li><strong>Choose Cuisine Styles:</strong> Select the types of cuisine you'd like to include in your recipes.</li>
+        <li><strong>Specify Nutritional Constraints:</strong> Add any dietary or nutritional constraints you need to adhere to.</li>
+        <li><strong>Add Food Tags:</strong> Include food tags like "vegetarian" if you want recipes specific to certain dietary preferences.</li>
+        <li><strong>Select Spice Level:</strong> Choose your preferred level of spiciness for the recipes.</li>
+        <li><strong>Determine Servings:</strong> Decide on the number of servings you want for your recipes.</li>
+        <li><strong>List Ingredients and Weights:</strong> Finally, input the ingredients you have on hand, including their quantities or weights.</li>
+    </ol>
 
     <button class="btn-settings" @onclick="GoToNextStep">Next</button>
     <button class="btn-settings" @onclick="() => GoToPreviousParentStep.InvokeAsync()">Go back</button>
@@ -45,12 +53,10 @@ else if (CurrentStep == DietaryRequirementSteps.SpiceLevel)
     <button class="btn-settings" @onclick="GoToPreviousStep">Previous</button>
 }
 else if (CurrentStep == DietaryRequirementSteps.NumberOfServings)
-{
-    <h2>NumberOfServings</h2>
-    
+{    
     <NumberOfServingsComponent NumberOfServings="@DietaryRequirements.NumberOfServings" />
 
-    <button class="btn-settings" @onclick="() => GoToNextParentStep.InvokeAsync()">Complete</button>
+    <button class="btn-settings" @onclick="() => GoToNextParentStep.InvokeAsync()">Next</button>
     <button class="btn-settings" @onclick="GoToPreviousStep">Previous</button>
 }
 
